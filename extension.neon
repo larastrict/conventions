@@ -1,0 +1,50 @@
+rules:
+    - LaraStrict\Conventions\PHPStan\UsableInContainerRule
+
+services:
+    -
+        class: LaraStrict\Conventions\PHPStan\UsableInContainerRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: false
+            # Ensure that classes that extends these classes are injectable
+            extends:
+                - Illuminate\Console\Command
+                - Illuminate\Database\Seeder
+            # Do not check if classes that has these suffixes are injectable
+            excludeSuffixes:
+                - Interface
+                - Expectation
+                - Assert
+            # Check classes in these namespaces
+            namespaces:
+                - \Actions\
+                - \Contracts\
+                - \Services\
+                - \Queries\
+                - \Transformers\
+                - \Controllers\
+                - \Listeners\
+                - \Managers\
+                - \Policies\
+                - \Middlewares\
+                - \Middleware\
+                - \Factories\
+                - \Resolvers\
+            # Do not check if classes file contains these folders
+            excludeFolders:
+                - tests
+
+parameters:
+
+    # it is impossible to map toArray()
+    checkMissingIterableValueType: false
+
+    ignoreErrors:
+        # CastsAttributes template was added in Laravel 9.49 (remove when we drop L9 support)
+        -
+            message: "#^PHPDoc tag @implements contains generic type Illuminate\\\\Contracts\\\\Database\\\\Eloquent\\\\CastsAttributes\\<float, float\\|int\\|string\\|null\\> but interface Illuminate\\\\Contracts\\\\Database\\\\Eloquent\\\\CastsAttributes is not generic\\.$#"
+            count: 1
+            path: src/Database/Models/Casts/FloatCast.php
+            reportUnmatched: false
+
