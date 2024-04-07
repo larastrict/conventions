@@ -74,6 +74,10 @@ return ECSConfig::configure()
     ->withSets([\LaraStrict\Conventions\ExtensionFiles::Ecs]);
 ```
 
+Check [extension-ecs.php](./extension-ecs.php) to see what is included:
+
+- Do not run ecs on blade files.
+
 ### Configuring RectorPHP
 
 For integrating RectorPHP, add or update a `rector.php` file in your project's root with the following configuration:
@@ -94,6 +98,11 @@ return RectorConfig::configure()
     // This is required to include the StrictPHP Conventions
     ->withSets([\LaraStrict\Conventions\ExtensionFiles::Rector]);
 ```
+
+Check [extension-rector.php](./extension-rector.php) to see what is included:
+
+- Prevent rector changing callable in routes.
+- Do not run rector on blade files.
 
 ### Integrating PHPStan
 
