@@ -14,7 +14,7 @@ This package bundles a selection of powerful tools and configurations to support
   and rules tailored for our projects.
 - **Easy Coding Standard Configuration**: Utilizes [Easy Coding Standard](https://github.com/symplify/coding-standard)
   for enforcing consistent coding styles and practices.
-- **PHPUnit 9/10 Support**: Ensures compatibility with [PHPUnit](https://phpunit.de) to facilitate comprehensive testing.
+- **PHPUnit 10/11 Support**: Ensures compatibility with [PHPUnit](https://phpunit.de) to facilitate comprehensive testing.
 - **RectorPHP Configuration**: Provides configurations for [RectorPHP](https://getrector.org) for better code quality.
 - **Extended PHPStan Packages**: Includes additional packages to augment PHPStan's capabilities. For more details, see
   the included `composer.json` file.
@@ -25,9 +25,15 @@ Before installation, ensure your environment meets these requirements:
 
 - PHP version 8.1 or higher (based on your Laravel version).
 - Composer
-- Laravel 9 or 10 or 11
+- Laravel 10+
 - Enabled [Extension installer for PHPStan](https://github.com/phpstan/extension-installer), which is automatically installed by our package to allow extension discovery.
 
+**Only latest major version of this package is maintained.**
+
+| Version | PHPUnit | PHP  | Laravel |
+|---------|---------|------|---------|
+| 1.x     | 10/11   | 8.2+ | 10+     |
+| 0.x     | 9       | 8.1+ | 9       |
 
 ## Installation
 

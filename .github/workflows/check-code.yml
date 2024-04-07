@@ -24,16 +24,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  code_l9:
-    name: "Code check - Laravel 9"
-    strategy:
-      matrix:
-        phpVersion: [ "8.1", "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@2bfd2e2fdf3fa3cf0cdf1b2c6d0379f91066084e
-    with:
-      composerRequireDev: "orchestra/testbench:^v7"
-      phpVersion: "${{ matrix.phpVersion }}"
-    secrets: inherit
 
   code_l10:
     name: "Code check - Laravel 10"
