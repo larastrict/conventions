@@ -16,9 +16,8 @@
     ],
     "require": {
         "php": ">=8.1",
-        "strictphp/conventions": "^v0.1.4",
-        "larastan/larastan": "^v2.9.2",
-        "nikic/php-parser": "^v4.19"
+        "strictphp/conventions": "^v0.1.5",
+        "larastan/larastan": "^v2.9.2"
     },
     "require-dev": {
         "orchestra/testbench": "^v7.41"
