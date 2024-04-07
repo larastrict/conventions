@@ -20,7 +20,7 @@
         "larastan/larastan": "^v2.9.2"
     },
     "require-dev": {
-        "orchestra/testbench": "^v7.41"
+        "orchestra/testbench": "^v7.41 | ^v8 | ^v9"
     },
     "scripts": {
         "analyse": "./vendor/bin/phpstan",
