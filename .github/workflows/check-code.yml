@@ -52,4 +52,5 @@ jobs:
     uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a4ea3cf7a947ef8baef8359f184d2bc1feefd8bf
     with:
       composerRequireDev: "orchestra/testbench:^v9"
+      composerRequire: "php:'>=8.2'"
     secrets: inherit
