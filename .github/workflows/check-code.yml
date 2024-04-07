@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.1", "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@2bfd2e2fdf3fa3cf0cdf1b2c6d0379f91066084e
     with:
       composerRequireDev: "orchestra/testbench:^v7"
       phpVersion: "${{ matrix.phpVersion }}"
@@ -40,7 +40,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.1", "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@2bfd2e2fdf3fa3cf0cdf1b2c6d0379f91066084e
     with:
       composerRequireDev: "orchestra/testbench:^v8"
       phpVersion: "${{ matrix.phpVersion }}"
@@ -51,7 +51,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@2bfd2e2fdf3fa3cf0cdf1b2c6d0379f91066084e
     with:
       composerRequireDev: "orchestra/testbench:^v9"
       phpVersion: "${{ matrix.phpVersion }}"
