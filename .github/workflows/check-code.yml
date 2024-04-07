@@ -32,6 +32,7 @@ jobs:
     uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
     with:
       composerRequireDev: "orchestra/testbench:^v7"
+      phpVersion: "${{ matrix.phpVersion }}"
     secrets: inherit
 
   code_l10:
@@ -42,6 +43,7 @@ jobs:
     uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
     with:
       composerRequireDev: "orchestra/testbench:^v8"
+      phpVersion: "${{ matrix.phpVersion }}"
     secrets: inherit
 
   code_l11:
@@ -52,4 +54,5 @@ jobs:
     uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
     with:
       composerRequireDev: "orchestra/testbench:^v9"
+      phpVersion: "${{ matrix.phpVersion }}"
     secrets: inherit
