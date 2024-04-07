@@ -23,9 +23,9 @@ This package bundles a selection of powerful tools and configurations to support
 
 Before installation, ensure your environment meets these requirements:
 
-- PHP version 8.1 or higher.
+- PHP version 8.1 or higher (based on your Laravel version).
 - Composer
-- Laravel 9+
+- Laravel 9 or 10 or 11
 - Enabled [Extension installer for PHPStan](https://github.com/phpstan/extension-installer), which is automatically installed by our package to allow extension discovery.
 
 

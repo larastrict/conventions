@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.1", "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a4ea3cf7a947ef8baef8359f184d2bc1feefd8bf
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
     with:
       composerRequireDev: "orchestra/testbench:^v7"
     secrets: inherit
@@ -39,7 +39,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.1", "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a4ea3cf7a947ef8baef8359f184d2bc1feefd8bf
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
     with:
       composerRequireDev: "orchestra/testbench:^v8"
     secrets: inherit
@@ -49,8 +49,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a4ea3cf7a947ef8baef8359f184d2bc1feefd8bf
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@9c3ffbff482560dc6a110551624d8a4ed9cc3506
     with:
       composerRequireDev: "orchestra/testbench:^v9"
-      composerRequire: "php:'>=8.2'"
     secrets: inherit
