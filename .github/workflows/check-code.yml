@@ -24,10 +24,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  code:
-    name: "Code check"
+  code_l9:
+    name: "Code check - Laravel 9"
     strategy:
       matrix:
         phpVersion: [ "8.1", "8.2", "8.3" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@7562253bdc3769847417e3476b501e7126f5d2c0
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a4ea3cf7a947ef8baef8359f184d2bc1feefd8bf
+    with:
+      composerRequireDev: "orchestra/testbench:^v7"
+    secrets: inherit
+
+  code_l10:
+    name: "Code check - Laravel 10"
+    strategy:
+      matrix:
+        phpVersion: [ "8.1", "8.2", "8.3" ]
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a4ea3cf7a947ef8baef8359f184d2bc1feefd8bf
+    with:
+      composerRequireDev: "orchestra/testbench:^v8"
+    secrets: inherit
+
+  code_l11:
+    name: "Code check - Laravel 11"
+    strategy:
+      matrix:
+        phpVersion: [ "8.2", "8.3" ]
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a4ea3cf7a947ef8baef8359f184d2bc1feefd8bf
+    with:
+      composerRequireDev: "orchestra/testbench:^v9"
     secrets: inherit
