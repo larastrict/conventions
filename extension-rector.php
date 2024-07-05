@@ -9,12 +9,13 @@ use Rector\Php81\Rector\Array_\FirstClassCallableRector;
 use StrictPhp\Conventions\ExtensionFiles;
 
 $routes = '/*/routes/*';
+$configs = '*/config/*';
 
 return RectorConfig::configure()
     ->withSkip([
         '*.blade.php',
-        FirstClassCallableRector::class => [$routes],
-        StaticCallOnNonStaticToInstanceCallRector::class =>  [$routes],
         CallableThisArrayToAnonymousFunctionRector::class => [$routes],
+        FirstClassCallableRector::class => [$routes, $configs],
+        StaticCallOnNonStaticToInstanceCallRector::class =>  [$routes, $configs],
     ])
     ->withSets([ExtensionFiles::Rector]);
