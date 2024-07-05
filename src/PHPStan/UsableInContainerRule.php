@@ -53,7 +53,7 @@ final class UsableInContainerRule implements Rule
         private readonly array $excludeFolders = [],
         array $excludeSuffixes = [],
         private readonly array $excludeClasses = [],
-        private readonly bool $enabled = false
+        private readonly bool $enabled = false,
     ) {
         $excludeMap = array_flip($excludeNamespaces);
 
@@ -110,10 +110,10 @@ final class UsableInContainerRule implements Rule
 
             if ($isInterface) {
                 $error->addTip(
-                    'Did you forget to register your interface in the container? Use service providers to register your interfaces.'
+                    'Did you forget to register your interface in the container? Use service providers to register your interfaces.',
                 );
                 $error->addTip(
-                    'If your interface is not meant to be used in the container, move your interface to "Interfaces" namespace.'
+                    'If your interface is not meant to be used in the container, move your interface to "Interfaces" namespace.',
                 );
             }
 

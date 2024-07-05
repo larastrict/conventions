@@ -2,7 +2,9 @@
 
 ![.github/banner.webp](.github/banner.webp)
 
-Enhance the robustness and consistency of your Laravel applications with LaraStrict conventions. This package integrates essential tools like PHPStan, Easy Coding Standard, RectorPHP, and tailored rules to streamline your development process.
+Enhance the robustness and consistency of your Laravel applications with LaraStrict conventions. This package integrates
+essential tools like PHPStan, Easy Coding Standard, RectorPHP, and tailored rules to streamline your development
+process.
 
 This package extends the [StrictPHP conventions](https://github.com/strictphp/conventions).
 
@@ -14,7 +16,8 @@ This package bundles a selection of powerful tools and configurations to support
   and rules tailored for our projects.
 - **Easy Coding Standard Configuration**: Utilizes [Easy Coding Standard](https://github.com/symplify/coding-standard)
   for enforcing consistent coding styles and practices.
-- **PHPUnit 10/11 Support**: Ensures compatibility with [PHPUnit](https://phpunit.de) to facilitate comprehensive testing.
+- **PHPUnit 10/11 Support**: Ensures compatibility with [PHPUnit](https://phpunit.de) to facilitate comprehensive
+  testing.
 - **RectorPHP Configuration**: Provides configurations for [RectorPHP](https://getrector.org) for better code quality.
 - **Extended PHPStan Packages**: Includes additional packages to augment PHPStan's capabilities. For more details, see
   the included `composer.json` file.
@@ -26,7 +29,8 @@ Before installation, ensure your environment meets these requirements:
 - PHP version 8.1 or higher (based on your Laravel version).
 - Composer
 - Laravel 10+
-- Enabled [Extension installer for PHPStan](https://github.com/phpstan/extension-installer), which is automatically installed by our package to allow extension discovery.
+- Enabled [Extension installer for PHPStan](https://github.com/phpstan/extension-installer), which is automatically
+  installed by our package to allow extension discovery.
 
 **Only latest major version of this package is maintained.**
 
@@ -43,7 +47,8 @@ To integrate LaraStrict Conventions into your project, run the following command
 composer require larastrict/conventions --dev
 ```
 
-This installs the package as a development dependency. During installation, you'll be prompted to confirm the installation of the plugin:
+This installs the package as a development dependency. During installation, you'll be prompted to confirm the
+installation of the plugin:
 
 > Do you trust "phpstan/extension-installer" to execute code and wish to enable it now? (yes/no) [y]:
 
@@ -108,11 +113,21 @@ Check [extension-rector.php](./extension-rector.php) to see what is included:
 
 Ensure you use the PHPStan extension installer to install the required extensions.
 
-### Rules
+#### PHPStan Configuration
+
+You will probably need to add a `phpstan.neon` and ignore this error:
+
+```neon
+parameters:
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+```
+
+#### Rules
 
 The package includes the following rules:
 
-#### UsableInContainerRule
+##### UsableInContainerRule
 
 > **Customization does not work yet. Currently disabled**
 
@@ -151,16 +166,21 @@ Default settings can be found [in ./extension.neon file](./extension.neon)
 
 This project owes its existence to the generous support of several other impactful projects:
 
-- **[Canvastera](https://canvastera.com)** - Empowering users to craft multimedia posters and share them worldwide. (EDU/Hobby)
+- **[Canvastera](https://canvastera.com)** - Empowering users to craft multimedia posters and share them worldwide. (
+  EDU/Hobby)
 - **[Azzurro Travel Agency](https://azzurro.cz)** - Specializing in holidays in Italy.
 - **[Redtag Studio](https://redtag.studio)** - Crafting digital products for your enjoyment.
 
 Explore more of our open-source initiatives:
 
-- **[Larastrict](https://larastrict.com)** - Enhancing the Laravel Framework with a suite of convenient tools and packages.
-- **[StrictPHP](https://strictphp.com)** - Enabling strictness in PHP projects through a curated set of packages and conventions, fostering the development of robust production-grade applications.
-- **[WrkFlow](https://wrk-flow.com)** - Streamlining development workflows with a comprehensive set of tools designed to boost efficiency.
+- **[Larastrict](https://larastrict.com)** - Enhancing the Laravel Framework with a suite of convenient tools and
+  packages.
+- **[StrictPHP](https://strictphp.com)** - Enabling strictness in PHP projects through a curated set of packages and
+  conventions, fostering the development of robust production-grade applications.
+- **[WrkFlow](https://wrk-flow.com)** - Streamlining development workflows with a comprehensive set of tools designed to
+  boost efficiency.
 
 ## License
 
-Open-source software licensed under the [MIT License](LICENSE.md). Feel free to use and modify it according to your needs.
+Open-source software licensed under the [MIT License](LICENSE.md). Feel free to use and modify it according to your
+needs.
