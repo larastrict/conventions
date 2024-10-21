@@ -71,10 +71,7 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
     ->withRootFiles()
-    ->withPaths([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
-    ])
+    ->withPaths(\LaraStrict\Conventions\ExtensionFiles::paths(baseDir: __DIR__, laravel11Structure: true))
     // This is required to include the StrictPHP Conventions
     ->withSets([\LaraStrict\Conventions\ExtensionFiles::Ecs]);
 ```
@@ -96,10 +93,7 @@ use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withRootFiles()
-    ->withPaths([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
-    ])
+    ->withPaths(\LaraStrict\Conventions\ExtensionFiles::paths(baseDir: __DIR__, laravel11Structure: true))
     // This is required to include the StrictPHP Conventions
     ->withSets([\LaraStrict\Conventions\ExtensionFiles::Rector]);
 ```
@@ -115,12 +109,28 @@ Ensure you use the PHPStan extension installer to install the required extension
 
 #### PHPStan Configuration
 
-You will probably need to add a `phpstan.neon` and ignore this error:
+Your phpstan should look like this:
 
 ```neon
 parameters:
-    ignoreErrors:
-        - identifier: missingType.iterableValue
+
+    level: max
+
+    paths:
+        - app
+        - config
+        - database/migrations
+        - database/seeders
+        - routes
+        - tests
+        - ecs.php
+        - rector.php
+        # Laravel 11 structure (comment if different)
+        - bootstrap/app.php
+        - bootstrap/providers.php
+
+    #ignoreErrors:
+    #    - identifier: missingType.iterableValue
 ```
 
 #### Rules
