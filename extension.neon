@@ -34,8 +34,3 @@ services:
             # Do not check if classes file contains these folders
             excludeFolders:
                 - tests
-
-parameters:
-
-    # it is impossible to map toArray()
-    checkMissingIterableValueType: false
