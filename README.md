@@ -2,8 +2,6 @@
 
 ![.github/banner.webp](.github/banner.webp)
 
-![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/pionl/9430d7a714e7868dbeb2d1a8fc3da817/raw/coverage.json)
-
 Enhance the robustness and consistency of your Laravel applications with LaraStrict conventions. This package integrates
 essential tools like PHPStan, Easy Coding Standard, RectorPHP, and tailored rules to streamline your development
 process.
