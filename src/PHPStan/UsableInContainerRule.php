@@ -18,22 +18,22 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<ClassLike>
  */
-final class UsableInContainerRule implements Rule
+final readonly class UsableInContainerRule implements Rule
 {
     /**
      * @var array<string>
      */
-    private readonly array $namespaces;
+    private array $namespaces;
 
     /**
      * @var array<class-string<object>, int>
      */
-    private readonly array $extendsMap;
+    private array $extendsMap;
 
     /**
      * @var array<string, int>
      */
-    private readonly array $excludeSuffixesMap;
+    private array $excludeSuffixesMap;
 
     /**
      * @param array<string>               $namespaces
@@ -45,15 +45,15 @@ final class UsableInContainerRule implements Rule
      * @param array<string>               $excludeClasses
      */
     public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
+        private ReflectionProvider $reflectionProvider,
         array $namespaces = [],
         array $appendNamespaces = [],
         array $excludeNamespaces = [],
         array $extends = [],
-        private readonly array $excludeFolders = [],
+        private array $excludeFolders = [],
         array $excludeSuffixes = [],
-        private readonly array $excludeClasses = [],
-        private readonly bool $enabled = false,
+        private array $excludeClasses = [],
+        private bool $enabled = false,
     ) {
         $excludeMap = array_flip($excludeNamespaces);
 
@@ -88,11 +88,8 @@ final class UsableInContainerRule implements Rule
             return [];
         }
 
-        /** @var class-string|null $className */
-        $className = $node->namespacedName?->toString();
-        if ($className === null) {
-            return [];
-        }
+        /** @var class-string $className */
+        $className = $node->namespacedName->toString();
 
         $continue = $this->isClassForDI(scope: $scope, node: $node, namespace: $namespace, className: $className);
 
@@ -106,7 +103,7 @@ final class UsableInContainerRule implements Rule
             return [];
         } catch (BindingResolutionException $bindingResolutionException) {
             $error = RuleErrorBuilder::message($bindingResolutionException->getMessage())
-                ->identifier('larstrict.usable_in_container');
+                ->identifier('larstrict.usableInContainer');
 
             if ($isInterface) {
                 $error->addTip(

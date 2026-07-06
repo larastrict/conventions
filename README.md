@@ -2,6 +2,8 @@
 
 ![.github/banner.webp](.github/banner.webp)
 
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/pionl/9430d7a714e7868dbeb2d1a8fc3da817/raw/coverage.json)
+
 Enhance the robustness and consistency of your Laravel applications with LaraStrict conventions. This package integrates
 essential tools like PHPStan, Easy Coding Standard, RectorPHP, and tailored rules to streamline your development
 process.
@@ -32,11 +34,12 @@ Before installation, ensure your environment meets these requirements:
 - Enabled [Extension installer for PHPStan](https://github.com/phpstan/extension-installer), which is automatically
   installed by our package to allow extension discovery.
 
-**Only latest major version of this package is maintained.**
+**Only the latest major version of this package is maintained.**
 
 | Version | PHPUnit | PHP  | Laravel |
 |---------|---------|------|---------|
-| 1.x     | 10/11   | 8.2+ | 10+     |
+| 2.x     | 10-13   | 8.3+ | 12-13   |
+| 1.x     | 10/11   | 8.2+ | 10-12   |
 | 0.x     | 9       | 8.1+ | 9       |
 
 ## Installation
@@ -102,6 +105,12 @@ Check [extension-rector.php](./extension-rector.php) to see what is included:
 
 - Prevent rector changing callable in routes.
 - Do not run rector on blade files.
+
+#### Implemented rector
+
+##### CarbonCreateToCreateStrictRector
+
+Change Carbon::create() to Carbon::createStrict()
 
 ### Integrating PHPStan
 

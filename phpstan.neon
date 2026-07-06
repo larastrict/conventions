@@ -5,8 +5,17 @@ parameters:
     level: max
     paths:
         - src
+        - fixtures
+        - tests
         - extension-ecs.php
         - extension-rector.php
         - ecs.php
         - rector.php
 
+    ignoreErrors:
+        -
+            identifier: larastan.noEnvCallsOutsideOfConfig
+            path: fixtures/*
+        -
+            identifier: class.notFound
+            path: fixtures/*
