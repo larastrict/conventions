@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.3", "8.4", "8.5" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@285ff2f768790d2f0b25d106616a8e402f677262
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a175c9b9239a356b40362a649c790ced8efc9e42
     with:
       composerRequireDev: "laravel/framework:^v12"
       phpVersion: "${{ matrix.phpVersion }}"
@@ -41,7 +41,7 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.3", "8.4", "8.5" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@986c6b7d8136121e02383c1a88437642c1501c0f
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-check.yml@a175c9b9239a356b40362a649c790ced8efc9e42
     with:
       composerRequireDev: "laravel/framework:^v13"
       phpVersion: "${{ matrix.phpVersion }}"
@@ -52,9 +52,10 @@ jobs:
     strategy:
       matrix:
         phpVersion: [ "8.3", "8.4", "8.5" ]
-    uses: wrk-flow/reusable-workflows/.github/workflows/php-tests.yml@285ff2f768790d2f0b25d106616a8e402f677262
+    uses: wrk-flow/reusable-workflows/.github/workflows/php-tests.yml@a175c9b9239a356b40362a649c790ced8efc9e42
     with:
       gistOnPhpVersion: "8.3"
       gistID: 9430d7a714e7868dbeb2d1a8fc3da817
       phpVersion: "${{ matrix.phpVersion }}"
-    secrets: inherit
+    secrets:
+      GIST_SECRET: ${{ secrets.GIST_SECRET }}
