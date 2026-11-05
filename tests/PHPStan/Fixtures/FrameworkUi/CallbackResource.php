@@ -10,7 +10,7 @@ final class CallbackResource extends Resource
 {
     public static function schema(): void
     {
-        new Action()
+        (new Action())
             ->url(static function (): string {
                 app(CarbonFactory::class);
                 now();

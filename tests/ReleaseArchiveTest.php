@@ -6,6 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 use PharData;
 use PharFileInfo;
 use PHPUnit\Framework\TestCase;
+use Random\Randomizer;
 use RecursiveIteratorIterator;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
@@ -15,7 +16,7 @@ final class ReleaseArchiveTest extends TestCase
     public function testComposerAndGitArchivesContainAllRuntimeFiles(): void
     {
         $root = dirname(__DIR__);
-        $temporary = sys_get_temp_dir() . '/larastrict-release-' . bin2hex(random_bytes(8));
+        $temporary = sys_get_temp_dir() . '/larastrict-release-' . bin2hex((new Randomizer())->getBytes(8));
         $snapshot = $temporary . '/snapshot';
         $filesystem = new Filesystem();
         $filesystem->makeDirectory($snapshot, 0755, true);

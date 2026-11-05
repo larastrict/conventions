@@ -5,13 +5,14 @@ namespace LaraStrict\ConventionsTests\PHPStan;
 use Illuminate\Filesystem\Filesystem;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPUnit\Framework\TestCase;
+use Random\Randomizer;
 use Symfony\Component\Process\Process;
 
 final class ExtensionDependencyCacheTest extends TestCase
 {
     public function testSourceChangesRefreshCachedDiagnosticsWithoutApplicationChanges(): void
     {
-        $directory = sys_get_temp_dir() . '/larastrict-result-cache-' . bin2hex(random_bytes(8));
+        $directory = sys_get_temp_dir() . '/larastrict-result-cache-' . bin2hex((new Randomizer())->getBytes(8));
         $rule = <<<'PHP_WRAP'
         <?php
         namespace LarastrictCacheProbe;

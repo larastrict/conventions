@@ -4,6 +4,7 @@ namespace LaraStrict\ConventionsTests\PHPStan;
 
 use Illuminate\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
+use Random\Randomizer;
 use Symfony\Component\Process\Process;
 
 final class ArchitectureProfileTest extends TestCase
@@ -11,7 +12,7 @@ final class ArchitectureProfileTest extends TestCase
     public function testDefaultRulesCanBeDisabledByNamedService(): void
     {
         $root = dirname(__DIR__, 2);
-        $directory = sys_get_temp_dir() . '/larastrict-defaults-' . bin2hex(random_bytes(8));
+        $directory = sys_get_temp_dir() . '/larastrict-defaults-' . bin2hex((new Randomizer())->getBytes(8));
         mkdir($directory . '/Actions', recursive: true);
         $fixture = $directory . '/Actions/NoExecuteAction.php';
         file_put_contents($fixture, '<?php namespace App\\Actions; final class NoExecuteAction {}');
@@ -43,7 +44,7 @@ final class ArchitectureProfileTest extends TestCase
     public function testDefaultContainerRuleResolvesWiredClassesAndReportsMissingConstructorInputs(): void
     {
         $root = dirname(__DIR__, 2);
-        $directory = sys_get_temp_dir() . '/larastrict-injectable-' . bin2hex(random_bytes(8));
+        $directory = sys_get_temp_dir() . '/larastrict-injectable-' . bin2hex((new Randomizer())->getBytes(8));
         mkdir($directory . '/Actions', recursive: true);
 
         try {
@@ -79,7 +80,7 @@ final class ArchitectureProfileTest extends TestCase
     public function testParameterNamingOnlyChecksConfiguredInjectableDeclaringClasses(): void
     {
         $root = dirname(__DIR__, 2);
-        $directory = sys_get_temp_dir() . '/larastrict-parameter-names-' . bin2hex(random_bytes(8));
+        $directory = sys_get_temp_dir() . '/larastrict-parameter-names-' . bin2hex((new Randomizer())->getBytes(8));
         mkdir($directory . '/Pilot/Services', recursive: true);
         $service = $directory . '/Pilot/Services/PaymentService.php';
         $fixture = $directory . '/Pilot/Services/ConsumerService.php';
@@ -115,7 +116,7 @@ final class ArchitectureProfileTest extends TestCase
     public function testCompleteStaticProfileAllowsEveryQueryResultKind(): void
     {
         $root = dirname(__DIR__, 2);
-        $directory = sys_get_temp_dir() . '/larastrict-profile-' . bin2hex(random_bytes(8));
+        $directory = sys_get_temp_dir() . '/larastrict-profile-' . bin2hex((new Randomizer())->getBytes(8));
         mkdir($directory);
 
         try {
@@ -138,7 +139,7 @@ final class ArchitectureProfileTest extends TestCase
     public function testInjectionRegistryConfigurationIsSharedByNamingAndResolutionRules(): void
     {
         $root = dirname(__DIR__, 2);
-        $directory = sys_get_temp_dir() . '/larastrict-injection-points-' . bin2hex(random_bytes(8));
+        $directory = sys_get_temp_dir() . '/larastrict-injection-points-' . bin2hex((new Randomizer())->getBytes(8));
         mkdir($directory . '/Portal/Services', recursive: true);
         $fixture = $directory . '/Portal/Consumer.php';
         $service = $directory . '/Portal/Services/ReadyService.php';

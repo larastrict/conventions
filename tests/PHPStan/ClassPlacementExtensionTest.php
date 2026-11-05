@@ -4,6 +4,7 @@ namespace LaraStrict\ConventionsTests\PHPStan;
 
 use Illuminate\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
+use Random\Randomizer;
 use Symfony\Component\Process\Process;
 
 final class ClassPlacementExtensionTest extends TestCase
@@ -11,7 +12,7 @@ final class ClassPlacementExtensionTest extends TestCase
     public function testPackageConfigurationAddsPlacementWithoutReplacingDefaults(): void
     {
         $root = dirname(__DIR__, 2);
-        $directory = sys_get_temp_dir() . '/larastrict-placement-' . bin2hex(random_bytes(8));
+        $directory = sys_get_temp_dir() . '/larastrict-placement-' . bin2hex((new Randomizer())->getBytes(8));
         mkdir($directory);
 
         try {

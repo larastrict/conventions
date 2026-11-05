@@ -7,6 +7,7 @@ use LaraStrict\Conventions\PHPStan\ClassPlacementPolicy;
 use LaraStrict\Conventions\Rector\ClassNamingRector;
 use LaraStrict\ConventionsTests\PHPStan\Fixtures\Extensions\SdkPlacementExtension;
 use PHPUnit\Framework\TestCase;
+use Random\Randomizer;
 use Rector\Config\RectorConfig;
 use Symfony\Component\Process\Process;
 
@@ -14,7 +15,7 @@ final class NativeClassNamingProcessTest extends TestCase
 {
     public function testNativeRectorRenamesCodeAndLeavesFileMovesToTheImplementer(): void
     {
-        $root = sys_get_temp_dir() . '/larastrict-class-names-test-' . bin2hex(random_bytes(6));
+        $root = sys_get_temp_dir() . '/larastrict-class-names-test-' . bin2hex((new Randomizer())->getBytes(6));
         $files = new Filesystem();
         $package = dirname(__DIR__, 3);
         $files->makeDirectory($root . '/vendor/bin', 0755, true);

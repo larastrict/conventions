@@ -56,7 +56,7 @@ final class CallbackHelper
 {
     public static function configure(): void
     {
-        new \Filament\Actions\Action()
+        (new \Filament\Actions\Action())
             ->url(static function (): string {
                 app(\Carbon\Factory::class);
 
