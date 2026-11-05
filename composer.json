@@ -29,7 +29,7 @@
         "orchestra/testbench": "^v10.10.0 | ^v11.1.0"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit",
+        "test": "@php -d zend.assertions=1 ./vendor/bin/phpunit",
         "analyse": "./vendor/bin/phpstan",
         "qa": [
             "@lint",

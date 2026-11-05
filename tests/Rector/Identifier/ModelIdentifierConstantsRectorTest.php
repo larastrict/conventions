@@ -40,4 +40,9 @@ final class ModelIdentifierConstantsRectorTest extends AbstractRectorTestCase
     {
         $this->doTestFile(__DIR__ . '/Fixture/query-aliases.php.inc', includeFixtureDirectoryAsSource: true);
     }
+
+    public function testQueryAliasesLeaveFirstClassCallablesUnchanged(): void
+    {
+        $this->doTestFile(__DIR__ . '/Fixture/query-alias-callables.php.inc', includeFixtureDirectoryAsSource: true);
+    }
 }

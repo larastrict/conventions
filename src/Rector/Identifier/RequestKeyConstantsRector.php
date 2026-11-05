@@ -237,6 +237,10 @@ CODE
             $statements[] = new ClassConst(
                 [new Const_(new Identifier($name), new String_($value))],
                 Modifiers::PUBLIC,
+                [
+                    'startLine' => $node->getStartLine(),
+                    'endLine' => $node->getEndLine(),
+                ],
             );
         }
 
