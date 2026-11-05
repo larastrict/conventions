@@ -90,9 +90,14 @@ CODE
                 }
 
                 $details = IdentifierPolicy::selectedRawAliasDetails($valueCall);
+
+                if ($details === null) {
+                    continue;
+                }
+
                 $value = $valueCall->getArgs()[0]->value ?? null;
 
-                if ($details === null || ! $value instanceof String_ || $value->value !== $details['alias']) {
+                if (! $value instanceof String_ || $value->value !== $details['alias']) {
                     continue;
                 }
 
@@ -169,7 +174,10 @@ CODE
                 $constants[] = new Const_(new Identifier($name), new String_($value));
             }
 
-            $node->stmts = [new ClassConst($constants, Modifiers::PRIVATE), ...$node->stmts];
+            $node->stmts = [new ClassConst($constants, Modifiers::PRIVATE, [
+                'startLine' => $node->getStartLine(),
+                'endLine' => $node->getEndLine(),
+            ]), ...$node->stmts];
             $changed = true;
         }
 
