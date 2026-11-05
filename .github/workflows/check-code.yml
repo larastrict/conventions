@@ -10,7 +10,11 @@ on:
   pull_request:
     paths:
       - "src/**"
+      - "tests/**"
+      - "bin/**"
+      - "resources/ai/**"
       - "composer.json"
+      - ".gitattributes"
       - "ecs.php"
       - "extension-ecs.php"
       - "rector.php"

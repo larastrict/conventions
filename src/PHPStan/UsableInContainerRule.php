@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace LaraStrict\Conventions\PHPStan;
 
@@ -16,6 +14,9 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
+ * Check that the application container can resolve selected classes and contracts.
+ * Create them through the real container to find missing bindings or constructor inputs.
+ *
  * @implements Rule<ClassLike>
  */
 final readonly class UsableInContainerRule implements Rule
@@ -53,7 +54,7 @@ final readonly class UsableInContainerRule implements Rule
         private array $excludeFolders = [],
         array $excludeSuffixes = [],
         private array $excludeClasses = [],
-        private bool $enabled = false,
+        private bool $enabled = true,
     ) {
         $excludeMap = array_flip($excludeNamespaces);
 
@@ -78,6 +79,7 @@ final readonly class UsableInContainerRule implements Rule
 
         $isInterface = $node instanceof Interface_;
         $isClass = $node instanceof Class_;
+
         if ($isClass === false && $isInterface === false) {
             return [];
         }
@@ -91,7 +93,7 @@ final readonly class UsableInContainerRule implements Rule
         /** @var class-string $className */
         $className = $node->namespacedName->toString();
 
-        $continue = $this->isClassForDI(scope: $scope, node: $node, namespace: $namespace, className: $className);
+        $continue = $this->isClassForDI(scope: $scope, node: $node, className: $className);
 
         if ($continue === false) {
             return [];
@@ -138,7 +140,7 @@ final readonly class UsableInContainerRule implements Rule
      *
      * @param class-string $className
      */
-    private function isClassForDI(Scope $scope, Node $node, string $namespace, string $className): bool {
+    private function isClassForDI(Scope $scope, Node $node, string $className): bool {
         $conditions = [
             static fn (): bool => $node instanceof Class_ && $node->isAbstract(),
             fn (): bool => $this->isInExcludedFolderCondition($scope->getFile()),
@@ -152,54 +154,11 @@ final readonly class UsableInContainerRule implements Rule
             }
         }
 
-        $resolvers = [
-            fn (): bool => $this->isInNamespaceResolver($namespace),
-            fn (): bool => $this->implementsClassResolver($className),
-        ];
-
-        foreach ($resolvers as $resolver) {
-            if ($resolver()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function isInNamespaceResolver(string $namespace): bool
-    {
-        foreach ($this->namespaces as $usableNamespace) {
-            if (str_contains($namespace, $usableNamespace)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param class-string $className
-     */
-    private function implementsClassResolver(string $className): bool
-    {
-        if ($this->extendsMap === []) {
-            return false;
-        }
-
         if ($this->reflectionProvider->hasClass($className) === false) {
             return false;
         }
 
-        $reflectionClass = $this->reflectionProvider->getClass($className);
-
-        while ($reflectionClass = $reflectionClass->getParentClass()) {
-            $name = $reflectionClass->getName();
-            if (array_key_exists($name, $this->extendsMap)) {
-                return true;
-            }
-        }
-
-        return false;
+        return InjectableClassSelector::matches($this->reflectionProvider->getClass($className), $this->namespaces, array_keys($this->extendsMap));
     }
 
     private function isInExcludedFolderCondition(string $file): bool

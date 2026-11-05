@@ -1,0 +1,9 @@
+parameters:
+    bootstrapFiles:
+        - Fixtures/Dependencies/ChargeAction.php
+        - Fixtures/Dependencies/AllowedFrameworkDependencies.php
+        - Fixtures/Dependencies/BadFrameworkDependencies.php
+        - Fixtures/Dependencies/RequestMethodDependencies.php
+        - Fixtures/Dependencies/InjectionScopes.php
+        - Fixtures/Dependencies/ScopedClientFactory.php
+        - Fixtures/Dependencies/DynamicLookupFactory.php

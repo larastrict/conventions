@@ -2,6 +2,17 @@ includes:
     - extension.neon
 
 parameters:
+    bootstrapFiles:
+        - vendor/symplify/easy-coding-standard/vendor/autoload.php
+
+    # Rule fixtures deliberately contain invalid PHP types and convention violations.
+    # Keep symbols available while checking their diagnostics through RuleTestCase.
+    scanDirectories:
+        - tests/PHPStan/Fixtures
+    excludePaths:
+        analyse:
+            - tests/PHPStan/Fixtures/*
+
     level: max
     paths:
         - src

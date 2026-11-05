@@ -1,0 +1,7 @@
+parameters:
+    bootstrapFiles:
+        - ../External/Framework/UiStubs.php
+        - Fixtures/FrameworkUi/ScreenService.php
+        - Fixtures/FrameworkUi/StaticResource.php
+        - Fixtures/FrameworkUi/OrdinaryService.php
+        - Fixtures/FrameworkUi/CallbackResource.php

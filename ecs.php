@@ -8,4 +8,5 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 return ECSConfig::configure()
     ->withRootFiles()
     ->withPaths([__DIR__ . '/src', __DIR__ . '/fixtures', __DIR__ . '/tests'])
-    ->withSets([ExtensionFiles::Ecs]);
+    ->withSets([ExtensionFiles::Ecs])
+    ->withSkip([__DIR__ . '/tests/PHPStan/Fixtures']);

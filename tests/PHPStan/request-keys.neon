@@ -1,0 +1,6 @@
+parameters:
+    bootstrapFiles:
+        - Fixtures/Requests/Support/GetValue.php
+        - Fixtures/Requests/GoodRequest.php
+        - Fixtures/Requests/BadRequest.php
+        - Fixtures/Requests/OtherService.php

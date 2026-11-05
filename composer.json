@@ -21,7 +21,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "strictphp/conventions": "^v2.0.2",
+        "strictphp/conventions": "^2.1",
         "larastan/larastan": "^v3.10.0"
     },
     "require-dev": {
@@ -37,8 +37,8 @@
             "@test"
         ],
         "lint": [
-            "@lint:fix",
-            "@lint:upgrade"
+            "@lint:upgrade",
+            "@lint:fix"
         ],
         "lint:check": "./vendor/bin/ecs",
         "lint:fix": "./vendor/bin/ecs --fix",
@@ -53,11 +53,44 @@
             "includes": [
                 "extension.neon"
             ]
+        },
+        "strictphp/conventions": {
+            "skills": {
+                "larastrict": "resources/ai/larastrict",
+                "larastrict-cache": "resources/ai/larastrict-cache",
+                "larastrict-migrations": "resources/ai/larastrict-migrations",
+                "larastrict-testing": "resources/ai/larastrict-testing"
+            },
+            "instructions": [
+                "resources/ai/AGENTS.md"
+            ]
         }
     },
     "config": {
         "allow-plugins": {
             "phpstan/extension-installer": true
         }
+    },
+    "archive": {
+        "exclude": [
+            "/.agents",
+            "/.github",
+            "/.gitlab",
+            "/.idea",
+            "/.phpunit.cache",
+            "/.gitattributes",
+            "/.gitignore",
+            "/CONTRIBUTING.md",
+            "/composer.lock",
+            "/ecs.php",
+            "/fixtures",
+            "/phpstan-baseline.neon",
+            "/phpstan.neon",
+            "/phpunit.xml",
+            "/phpunit.xml.dist",
+            "/rector.php",
+            "/tests",
+            "/vendor"
+        ]
     }
 }
