@@ -1,16 +1,31 @@
-rules:
-    - LaraStrict\Conventions\PHPStan\UsableInContainerRule
-
 services:
-    -
+    larastrict.viewFilesystem:
+        class: Illuminate\Filesystem\Filesystem
+        autowired: false
+    larastrict.viewParserFactory:
+        class: PhpParser\ParserFactory
+        autowired: false
+    larastrict.viewTemplateService:
+        class: LaraStrict\Conventions\PHPStan\Services\ViewTemplateService
+        arguments:
+            filesystem: @larastrict.viewFilesystem
+            parserFactory: @larastrict.viewParserFactory
+    larastrict.sourceDependencies:
+        class: LaraStrict\Conventions\PHPStan\ConventionsSourceDependencyRule
+        tags: [phpstan.rules.rule]
+    larastrict.injectionPoints:
+        class: LaraStrict\Conventions\PHPStan\InjectionPointRegistry
+
+    larastrict.injectable:
         class: LaraStrict\Conventions\PHPStan\UsableInContainerRule
         tags: [phpstan.rules.rule]
         arguments:
-            enabled: false
+            enabled: true
             # Ensure that classes that extends these classes are injectable
             extends:
                 - Illuminate\Console\Command
                 - Illuminate\Database\Seeder
+                - Illuminate\Routing\Controller
             # Do not check if classes that has these suffixes are injectable
             excludeSuffixes:
                 - Interface
@@ -34,3 +49,47 @@ services:
             # Do not check if classes file contains these folders
             excludeFolders:
                 - tests
+
+    larastrict.classPlacement:
+        class: LaraStrict\Conventions\PHPStan\ClassPlacementRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: true
+            extensions: tagged(larastrict.classPlacementExtension)
+    larastrict.parameterName:
+        class: LaraStrict\Conventions\PHPStan\ParameterNameRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: true
+            injectionPointRegistry: @larastrict.injectionPoints
+    larastrict.actionQueryPublicApi:
+        class: LaraStrict\Conventions\PHPStan\ActionQueryPublicApiRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: true
+    larastrict.dependencies:
+        class: LaraStrict\Conventions\PHPStan\DependencyInjectionRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: true
+            injectionPointRegistry: @larastrict.injectionPoints
+    larastrict.viewData:
+        class: LaraStrict\Conventions\PHPStan\ViewDataRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: true
+    larastrict.viewTemplate:
+        class: LaraStrict\Conventions\PHPStan\ViewTemplateRule
+        arguments:
+            viewTemplateService: @larastrict.viewTemplateService
+        tags: [phpstan.rules.rule]
+    larastrict.modelIdentifiers:
+        class: LaraStrict\Conventions\PHPStan\ModelIdentifierRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: true
+    larastrict.requestKeys:
+        class: LaraStrict\Conventions\PHPStan\RequestKeyConstantsRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            enabled: true

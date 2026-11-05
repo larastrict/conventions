@@ -1,203 +1,152 @@
-# LaraStrict conventions for your Laravel apps
+# LaraStrict conventions
 
-![.github/banner.webp](.github/banner.webp)
+![LaraStrict banner](.github/banner.webp)
 
-Enhance the robustness and consistency of your Laravel applications with LaraStrict conventions. This package integrates
-essential tools like PHPStan, Easy Coding Standard, RectorPHP, and tailored rules to streamline your development
-process.
+Shared code rules and tools for Laravel projects. Keep code consistent, find errors,
+and give AI agents the same project guidance.
 
-This package extends the [StrictPHP conventions](https://github.com/strictphp/conventions).
+Built on [StrictPHP conventions](https://github.com/strictphp/conventions), with
+PHPStan, Larastan, Easy Coding Standard, Rector, and PHPUnit.
 
-## Key Features
+## Install
 
-This package bundles a selection of powerful tools and configurations to support your development workflow:
-
-- **PHPStan Configuration and Custom Rules**: Integrates [PHPStan](https://phpstan.org), with pre-defined configurations
-  and rules tailored for our projects.
-- **Easy Coding Standard Configuration**: Utilizes [Easy Coding Standard](https://github.com/symplify/coding-standard)
-  for enforcing consistent coding styles and practices.
-- **PHPUnit 10/11 Support**: Ensures compatibility with [PHPUnit](https://phpunit.de) to facilitate comprehensive
-  testing.
-- **RectorPHP Configuration**: Provides configurations for [RectorPHP](https://getrector.org) for better code quality.
-- **Extended PHPStan Packages**: Includes additional packages to augment PHPStan's capabilities. For more details, see
-  the included `composer.json` file.
-
-## Prerequisites
-
-Before installation, ensure your environment meets these requirements:
-
-- PHP version 8.1 or higher (based on your Laravel version).
-- Composer
-- Laravel 10+
-- Enabled [Extension installer for PHPStan](https://github.com/phpstan/extension-installer), which is automatically
-  installed by our package to allow extension discovery.
-
-**Only the latest major version of this package is maintained.**
-
-| Version | PHPUnit | PHP  | Laravel |
-|---------|---------|------|---------|
-| 2.x     | 10-13   | 8.3+ | 12-13   |
-| 1.x     | 10/11   | 8.2+ | 10-12   |
-| 0.x     | 9       | 8.1+ | 9       |
-
-## Installation
-
-To integrate LaraStrict Conventions into your project, run the following command in your terminal:
+Requires PHP 8.3 or later and Composer. Only the latest major version is maintained.
 
 ```bash
-composer require larastrict/conventions --dev
+composer require --dev larastrict/conventions
 ```
 
-This installs the package as a development dependency. During installation, you'll be prompted to confirm the
-installation of the plugin:
+Allow `phpstan/extension-installer` when Composer asks. It loads the PHPStan rules.
+All LaraStrict rules are enabled by default, including container checks.
+Boot the application and its service providers before running PHPStan.
 
-> Do you trust "phpstan/extension-installer" to execute code and wish to enable it now? (yes/no) [y]:
+Ask your coding agent to summarize the proposed changes and validation plan
+before making changes. Use this prompt:
 
-Type `y` to use all provided extensions.
+```text
+Set up LaraStrict Conventions in this Laravel project.
 
-## Getting Started
+Fetch and read:
+https://raw.githubusercontent.com/larastrict/conventions/main/doc/setup-guide.md
 
-After installation, you can tailor the provided configurations to meet your project's requirements.
+Read the project's existing agent and contribution instructions first.
+Inspect its PHP and Laravel versions, dependencies, and tool configuration.
 
-### Setting Up Easy Coding Standard
+Before running setup commands or changing files, summarize the proposed
+installation, including dependency, configuration, script, and AI file changes,
+and the validation plan.
+Ask for permission to proceed and wait for the user's answer.
+After approval, follow the guide.
 
-To use Easy Coding Standard, create or update an `ecs.php` file at your project's root with the following setup:
+Set up the development dependencies, Rector, ECS, PHPStan with Larastan,
+Composer scripts, and the shared StrictPHP AI instruction sync.
 
-```php
-<?php
+Merge existing configuration and Composer hooks. Preserve project-specific
+settings and the existing Laravel or Pest test runner.
 
-declare(strict_types=1);
+Use the recommended Composer script names and execution order from the guide:
+Rector → ECS → PHPStan → tests.
 
-use Symplify\EasyCodingStandard\Config\ECSConfig;
+Validate setup with the guide's read-only checks and the existing test runner.
+Resolve setup problems and report existing code violations or blocked checks.
+Do not disable rules or generate baselines just to make the checks pass.
 
-return ECSConfig::configure()
-    ->withRootFiles()
-    ->withPaths(\LaraStrict\Conventions\ExtensionFiles::paths(baseDir: __DIR__, laravel11Structure: true))
-    // This is required to include the StrictPHP Conventions
-    ->withSets([\LaraStrict\Conventions\ExtensionFiles::Ecs]);
+Summarize the changes and validation results. Then ask whether the user wants
+an upgrade session using $larastrict to bring existing code into compliance.
+Wait for approval before applying code transformations or fixing existing code.
+If approved, agree on the scope and run Rector → ECS → PHPStan → tests.
 ```
 
-Check [extension-ecs.php](./extension-ecs.php) to see what is included:
+You can also follow the complete [setup guide](doc/setup-guide.md) to configure
+PHPStan, ECS, Rector, Composer scripts, and AI instructions.
+Use Rector for class and reference changes. Move renamed files to their PSR-4
+paths after Rector runs. See [Rector fixes](docs/rector.md) for the workflow.
 
-- Do not run ecs on blade files.
+## Review or upgrade existing code
 
-### Configuring RectorPHP
+After AI sync, the agent can discover the installed skills from their descriptions
+and select them for normal implementation work. You do not need to name a skill
+for each task. Use an explicit skill prompt when you want a convention review or
+an upgrade session for existing code.
 
-For integrating RectorPHP, add or update a `rector.php` file in your project's root with the following configuration:
+To adopt the conventions in an existing codebase:
 
-```php
-<?php
+```text
+Use $larastrict to bring this project's existing code into compliance
+with the installed conventions.
 
-declare(strict_types=1);
+Inspect the codebase and apply the relevant skills and references.
+Preserve application behavior and project-specific instructions.
 
-use Rector\Config\RectorConfig;
-
-return RectorConfig::configure()
-    ->withRootFiles()
-    ->withPaths(\LaraStrict\Conventions\ExtensionFiles::paths(baseDir: __DIR__, laravel11Structure: true))
-    // This is required to include the StrictPHP Conventions
-    ->withSets([\LaraStrict\Conventions\ExtensionFiles::Rector]);
+Run Rector first, then ECS, then PHPStan, with tests last.
+Fix reported violations without disabling rules or adding baselines.
+Report changes and any remaining failures.
 ```
 
-Check [extension-rector.php](./extension-rector.php) to see what is included:
+For a review without code changes:
 
-- Prevent rector changing callable in routes.
-- Do not run rector on blade files.
-
-#### Implemented rector
-
-##### CarbonCreateToCreateStrictRector
-
-Change Carbon::create() to Carbon::createStrict()
-
-### Integrating PHPStan
-
-Ensure you use the PHPStan extension installer to install the required extensions.
-
-#### PHPStan Configuration
-
-Your phpstan should look like this:
-
-```neon
-parameters:
-
-    level: max
-
-    paths:
-        - app
-        - config
-        - database/migrations
-        - database/seeders
-        - routes
-        - tests
-        - ecs.php
-        - rector.php
-        # Laravel 11 structure (comment if different)
-        - bootstrap/app.php
-        - bootstrap/providers.php
-
-    #ignoreErrors:
-    #    - identifier: missingType.iterableValue
+```text
+Use $larastrict to review app/Orders and its tests against the installed conventions.
+Report findings with file references and suggested fixes. Do not change files.
 ```
 
-#### Rules
+To apply the fixes, request an upgrade session for that scope.
 
-The package includes the following rules:
+The Larastrict skill reads the shared StrictPHP skill first and adds Laravel
+conventions. You do not need to name both skills in each prompt.
 
-##### UsableInContainerRule
+## Integrate your own package
 
-> **Customization does not work yet. Currently disabled**
+Laravel packages use the shared `extra["strictphp/conventions"]` Composer key to
+distribute AI instructions and skills. Use `instructions` for short package rules
+and `skills` for implementation guidance. The same registration works in plain
+PHP projects; a Laravel-specific skill can extend `$larastrict`.
 
-The package includes rules for ensuring DI classes/contracts are used appropriately:
+Register the source files in the package, include them in its release, then run
+`composer strictphp:sync-ai` in the consuming application. The shared sync collects
+package rules into `AGENTS.md` and installs skills in `.agents/skills/`.
+See the [StrictPHP package integration example](https://github.com/strictphp/conventions#integrate-your-own-package)
+and [AI setup reference](docs/ai-agents.md).
 
-- **Ensures Contracts are Injectable**: Checks if an implementation is registered for the contract.
-- **Ensures Classes are Injectable**: Checks if a registered class has injectable dependencies.
+## Change a rule
 
-You can customize these settings as needed. Example configuration:
+Each LaraStrict PHPStan rule has an `enabled` setting. For example, add this to
+`phpstan.neon` to disable container checks:
 
 ```neon
 services:
-    -
-        class: LaraStrict\Conventions\PHPStan\UsableInContainerRule
-        tags: [phpstan.rules.rule]
+    larastrict.injectable:
         arguments:
-            enabled: true
-            # Ensure that classes that extends these classes are injectable
-            extends:
-                - Illuminate\Console\Command
-                - Illuminate\Database\Seeder
-            # Do not check if classes that has these suffixes are injectable
-            excludeSuffixes:
-                - MySuffix
-            # Check classes in these namespaces
-            namespaces:
-                - \DIClasses\
-            # Do not check if classes file contains these folders
-            excludeFolders:
-                - my_folder
+            enabled: false
 ```
 
-Default settings can be found [in ./extension.neon file](./extension.neon)
+Set `enabled: true` to enable it again. See [PHPStan rules](docs/phpstan.md) for
+all rule names and options.
 
-## Acknowledgement
+## AI agent guidance
 
-This project owes its existence to the generous support of several other impactful projects:
+The package includes agent skills for Larastrict conventions, migrations,
+caching, and testing. Sync them into your application to share the rules.
+See [AI agent setup](docs/ai-agents.md) for Laravel setup. The shared skill sync is documented in [StrictPHP AI agent setup](https://github.com/strictphp/conventions/blob/main/docs/ai-agents.md).
 
-- **[Canvastera](https://canvastera.com)** - Empowering users to craft multimedia posters and share them worldwide. (
-  EDU/Hobby)
-- **[Azzurro Travel Agency](https://azzurro.cz)** - Specializing in holidays in Italy.
-- **[Redtag Studio](https://redtag.studio)** - Crafting digital products for your enjoyment.
+## Documentation
 
-Explore more of our open-source initiatives:
+- [Complete installation guide](doc/setup-guide.md)
+- [Tool setup and commands](docs/setup.md)
+- [PHPStan rules and settings](docs/phpstan.md)
+- [Rector fixes and safety boundaries](docs/rector.md)
+- [AI agent setup and Blade checks](docs/ai-agents.md)
+- [Contributing](CONTRIBUTING.md)
 
-- **[Larastrict](https://larastrict.com)** - Enhancing the Laravel Framework with a suite of convenient tools and
-  packages.
-- **[StrictPHP](https://strictphp.com)** - Enabling strictness in PHP projects through a curated set of packages and
-  conventions, fostering the development of robust production-grade applications.
-- **[WrkFlow](https://wrk-flow.com)** - Streamlining development workflows with a comprehensive set of tools designed to
-  boost efficiency.
+## Supporters
+
+Thanks to [Canvastera](https://canvastera.com),
+[Azzurro Travel Agency](https://azzurro.cz), and
+[Redtag Studio](https://redtag.studio).
+
+Related projects: [LaraStrict](https://larastrict.com),
+[StrictPHP](https://strictphp.com), and [WrkFlow](https://wrk-flow.com).
 
 ## License
 
-Open-source software licensed under the [MIT License](LICENSE.md). Feel free to use and modify it according to your
-needs.
+[MIT](LICENSE.md).

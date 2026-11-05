@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace LaraStrict\ConventionsTests\PHPStan;
 
@@ -92,6 +90,18 @@ final class UsableInContainerRuleTest extends RuleTestCase
             excludeClasses: $this->excludeClasses,
             enabled: $this->enabled,
         );
+    }
+
+    public function testFlatCapabilityRolesAreCheckedWithoutResolvingValues(): void
+    {
+        $this->namespaces = ['\\Queries\\'];
+        $this->analyse([
+            __DIR__ . '/Fixtures/Naming/Core/Capabilities/LazyPaginator/LoadPageQuery.php',
+            __DIR__ . '/Fixtures/Naming/Core/Capabilities/LazyPaginator/PaginationCursor.php',
+        ], [[
+            'Unresolvable dependency resolving [Parameter #1 [ <required> string $requiredValue ]] in class LaraStrict\\ConventionsTests\\PHPStan\\Fixtures\\Naming\\Core\\Capabilities\\LazyPaginator\\LoadPageQuery',
+            5,
+        ]]);
     }
 
     public function testRuleDisabledProducesNoErrors(): void
@@ -190,6 +200,39 @@ final class UsableInContainerRuleTest extends RuleTestCase
     public function testGetNodeTypeReturnsClassLike(): void
     {
         self::assertSame(ClassLike::class, $this->getRule()->getNodeType());
+    }
+
+    public function testGroupedHttpControllersAreInjectable(): void
+    {
+        $this->namespaces = ['\\Controllers\\'];
+        $this->analyse([__DIR__ . '/Fixtures/Naming/Http/TenantApi/Store/UnresolvableController.php'], [[
+            'Unresolvable dependency resolving [Parameter #0 [ <required> string $requiredValue ]] in class LaraStrict\\ConventionsTests\\PHPStan\\Fixtures\\Naming\\Http\\TenantApi\\Store\\UnresolvableController',
+            5,
+        ]]);
+    }
+
+    public function testEloquentFactoriesAreNotContainerServices(): void
+    {
+        $this->namespaces = ['\\Factories\\'];
+        $this->analyse([__DIR__ . '/Fixtures/Naming/Factories/InputModelFactory.php'], []);
+    }
+
+    public function testStandaloneHttpControllersAreInjectable(): void
+    {
+        $this->namespaces = ['\\Controllers\\'];
+        $this->analyse([__DIR__ . '/Fixtures/Naming/Http/TenantWeb/VerifyController.php'], [[
+            'Unresolvable dependency resolving [Parameter #1 [ <required> string $requiredValue ]] in class LaraStrict\\ConventionsTests\\PHPStan\\Fixtures\\Naming\\Http\\TenantWeb\\VerifyController',
+            8,
+        ]]);
+    }
+
+    public function testEndpointOperationsAreInjectable(): void
+    {
+        $this->namespaces = ['\\Actions\\', '\\Queries\\'];
+        $this->analyse([__DIR__ . '/Fixtures/Naming/Http/TenantApi/Login/LoginQuery.php'], [[
+            'Unresolvable dependency resolving [Parameter #2 [ <required> string $requiredValue ]] in class LaraStrict\\ConventionsTests\\PHPStan\\Fixtures\\Naming\\Http\\TenantApi\\Login\\LoginQuery',
+            7,
+        ]]);
     }
 
     public function testTraitIsIgnored(): void
